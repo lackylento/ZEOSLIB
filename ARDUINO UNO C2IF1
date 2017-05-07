@@ -1,0 +1,88 @@
+int speedPinA=10;
+int speedPinB=11;
+int a, b, l, r,d;
+void setup() {
+  // put your setup code here, to run once:
+  pinMode(4,OUTPUT);
+  pinMode(5,OUTPUT);
+    pinMode(2,OUTPUT);
+  pinMode(3,OUTPUT);
+  Serial.begin(38400);
+}
+void motor(int a,int b, int e,int d){ 
+  if(a==1){
+ digitalWrite(2,HIGH);
+  }
+ else{
+   digitalWrite(2,LOW);
+ }
+   if(b==1){
+ digitalWrite(3,HIGH);
+   }
+ else{
+   digitalWrite(3,LOW);
+ }
+   if(e==1){
+ digitalWrite(4,HIGH);
+   }
+ else{
+   digitalWrite(4,LOW);
+ }
+   if(d==1){
+ digitalWrite(5,HIGH);
+   }
+ else{
+   digitalWrite(5,LOW);
+ }
+}
+void loop() {
+    int c1, c2, c3,c= 0;
+  if (Serial.available())
+  {
+
+    c1 = Serial.read();
+    c2 = Serial.read();
+    c3 = Serial.read();
+    if (c1 == 100 || c1 == 99) {
+      r = c1 - 99;
+    }
+    else if (c2 == 100 || c2 == 99) {
+      r = c2 - 99;
+    }
+    else {
+      r = c3 - 99;
+    }
+    if (c1 == 98 || c1 == 97) {
+      l = c1 - 97;
+    }
+    else if (c3 == 98 || c3 == 97) {
+      l = c3 - 97;
+    }
+    else {
+      l = c2 - 97;
+    }
+    if (c2 <= 98) {
+      c = c1 - 48;
+    }
+    else if (c3 <= 98) {
+      c = c3 - 48;
+    }
+    else {
+      c = c2 - 48;
+    }
+    if(l==0){
+  switch (c) {
+      case 1: motor(0,1,0,1); break;
+      
+      case 3: motor(0,1,1,0); break;
+  
+      case 5: motor(1,0,1,0); break;
+  
+      case 7: motor(1,0,0,1); break;
+ 
+      default: motor(1,1,1,1);break;
+    }}
+    else motor(1,1,1,1);
+}
+delay(20);
+}
